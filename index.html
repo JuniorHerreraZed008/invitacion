@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación Especial ☕💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <div class="hearts-container" id="heartsContainer"></div>
+    
+    <div class="card">
+        <div class="coffee-steam">
+            <span>~</span>
+            <span>~</span>
+            <span>~</span>
+        </div>
+        
+        <div class="coffee-cup">☕</div>
+        
+        <h1 class="title">¿Café Conmigo?</h1>
+        
+        <p class="message" id="message">
+            Me encantaría invitarte a tomar un café 
+            y pasar un rato increíble juntos 💕
+        </p>
+        
+        <div class="buttons-container">
+            <button class="btn btn-yes" id="btnYes">
+                <span class="btn-text">¡Sí! 💖</span>
+            </button>
+            <button class="btn btn-no" id="btnNo">
+                <span class="btn-text">No 😢</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="celebration" id="celebration"></div>
+            <div class="emoji-big">🎉</div>
+            <h2 id="modalTitle">¡Yay!</h2>
+            <p id="modalMessage"></p>
+            <div class="date-info" id="dateInfo">
+                <div class="date-item">
+                    <span class="date-icon">📅</span>
+                    <span class="date-text">5 de Enero</span>
+                </div>
+                <div class="date-item">
+                    <span class="date-icon">🕖</span>
+                    <span class="date-text">7:00 PM</span>
+                </div>
+                <div class="date-item">
+                    <span class="date-icon">📍</span>
+                    <span class="date-text">Plaza 24</span>
+                </div>
+            </div>
+            <button class="btn-close" id="btnClose">Perfecto 💕</button>
+        </div>
+    </div>
+
+    <script>
+        let noCount = 0;
+        const btnYes = document.getElementById('btnYes');
+        const btnNo = document.getElementById('btnNo');
+        const message = document.getElementById('message');
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMessage = document.getElementById('modalMessage');
+        const dateInfo = document.getElementById('dateInfo');
+        const btnClose = document.getElementById('btnClose');
+        const celebration = document.getElementById('celebration');
+
+        const messages = [
+            "Me encantaría invitarte a tomar un café y pasar un rato increíble juntos 💕",
+            "¿Segura? Va a ser súper divertido, lo prometo 🥺",
+            "¡Piénsalo bien! Será el mejor café de tu vida ☕✨",
+            "¿En serio? ¡Dale otra oportunidad a la idea! 🙏",
+            "Ay no, ¿de verdad no quieres? 😢💔",
+            "Por favooooor, solo un cafecito 🥹☕",
+            "Te prometo que no te vas a arrepentir 🌟",
+            "Okay, ya es oficial: TIENES que decir que sí 😤",
+            "No acepto un no como respuesta 😏💕",
+            "Mira, el botón de 'No' ya está cansado, dale al Sí 😄",
+            "¿Ya te convencí? ¡Di que síííí! 🎉",
+            "El universo quiere que digamos que sí 🌌✨",
+            "Última oportunidad... ¡o seguiré insistiendo! 😂",
+            "¿Todavía no? Bueno, aquí vamos de nuevo... 🔄",
+            "Ya perdí la cuenta de cuántas veces he preguntado 😅",
+            "¡Esto es más largo que una telenovela! Di que sí 📺💕",
+            "Creo que el botón 'Sí' se siente solo 😢",
+            "Tu dedo debe estar cansado, mejor presiona 'Sí' 😏",
+            "¿Sabes qué? Ya te vi sonriendo, eso es un sí 😌",
+            "Rendirse no está en mi vocabulario 💪✨"
+        ];
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.textContent = '💕';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            heart.style.fontSize = (Math.random() * 10 + 20) + 'px';
+            document.getElementById('heartsContainer').appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6c5ce7'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+                    celebration.appendChild(confetti);
+                }, i * 20);
+            }
+        }
+
+        btnYes.addEventListener('click', function() {
+            // Crear corazones
+            for (let i = 0; i < 20; i++) {
+                setTimeout(createHeart, i * 100);
+            }
+
+            // Mostrar modal con la información
+            modalTitle.textContent = '¡Sííííí! 🎉💕';
+            modalMessage.textContent = '¡Sabía que dirías que sí! Va a ser increíble, no puedo esperar 😍';
+            dateInfo.style.display = 'flex';
+            modal.style.display = 'flex';
+            
+            createConfetti();
+        });
+
+        btnNo.addEventListener('click', function() {
+            noCount++;
+            
+            if (noCount < messages.length) {
+                message.textContent = messages[noCount];
+            } else {
+                message.textContent = messages[messages.length - 1];
+            }
+
+            // Hacer el botón "Sí" más grande y llamativo
+            const currentSize = 1 + (noCount * 0.15);
+            btnYes.style.transform = `scale(${Math.min(currentSize, 2.5)})`;
+            
+            // Hacer el botón "No" más pequeño
+            const noSize = Math.max(1 - (noCount * 0.1), 0.4);
+            btnNo.style.transform = `scale(${noSize})`;
+
+            // Cambiar texto del botón "No"
+            const noTexts = ['No 😢', '¿No? 🥺', 'Nop 😔', 'Nel 😞', 'Nope 😿', 'Nanai 💔', 'Ni modo 😭'];
+            if (noCount < noTexts.length) {
+                btnNo.querySelector('.btn-text').textContent = noTexts[noCount];
+            }
+
+            // Agregar shake al mensaje
+            message.classList.add('shake');
+            setTimeout(() => message.classList.remove('shake'), 500);
+
+            // Hacer que el botón No se mueva aleatoriamente después de varios clicks
+            if (noCount > 5) {
+                const maxX = window.innerWidth - btnNo.offsetWidth - 100;
+                const maxY = window.innerHeight - btnNo.offsetHeight - 100;
+                const randomX = Math.random() * maxX;
+                const randomY = Math.random() * maxY;
+                
+                btnNo.style.position = 'fixed';
+                btnNo.style.left = randomX + 'px';
+                btnNo.style.top = randomY + 'px';
+            }
+        });
+
+        btnClose.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Efecto hover divertido en el botón No
+        btnNo.addEventListener('mouseenter', function() {
+            if (noCount > 8) {
+                const maxX = window.innerWidth - btnNo.offsetWidth - 100;
+                const maxY = window.innerHeight - btnNo.offsetHeight - 100;
+                const randomX = Math.random() * maxX;
+                const randomY = Math.random() * maxY;
+                
+                btnNo.style.position = 'fixed';
+                btnNo.style.left = randomX + 'px';
+                btnNo.style.top = randomY + 'px';
+            }
+        });
+    </script>
+</body>
+</html>
